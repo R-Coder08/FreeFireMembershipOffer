@@ -6,9 +6,9 @@
     <title>Offer Station</title>
     <style>
         body {
-             -webkit-user-select: none; /* Safari */
-              -ms-user-select: none; /* IE 10 and IE 11 */
-              user-select: none; /* Standard syntax */
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -16,15 +16,104 @@
             height: 100vh;
             margin: 0;
             background-color: #f5f5f5;
+            padding-top: 40px; /* Space for marquee */
+            position: relative;
+        }
+        
+        /* Rainbow Marquee at top of body */
+        .global-marquee {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #000;
+            overflow: hidden;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+        
+        .rainbow-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 15s linear infinite;
+            font-weight: bold;
+            font-size: 16px;
+            background: linear-gradient(90deg, 
+                #ff0000, #ff8000, #ffff00, 
+                #80ff00, #00ff80, #00ffff, 
+                #0080ff, #0000ff, #8000ff, 
+                #ff00ff, #ff0080, #ff0000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 1200% 100%;
+            animation: marquee 15s linear infinite, rainbow 8s linear infinite;
+            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        .offer-wrapper {
+            position: relative;
+            width: 90vw;
+            padding: 4px;
+            border-radius: 19px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3, #ff6b6b, #FFD000);
+            background-size: 300% 300%;
+            animation: gradientBorder 4s ease infinite;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden; /* For shine effect */
+        }
+        
+        /* Shine effect */
+        .offer-wrapper::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 45%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0) 55%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(45deg);
+            animation: shine 3s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            20% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        @keyframes gradientBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .offer-container {
             position: relative;
-            width: 90vw;
+            width: 100%;
             height: 30vh;
             background: linear-gradient(135deg, #6e8efb, #a777e3);
             border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -70,10 +159,10 @@
         
         .popup-overlay {
             position: fixed;
-            top: 0;
+            top: 40px; /* Below marquee */
             left: 0;
             width: 100%;
-            height: 100%;
+            height: calc(100% - 40px);
             background-color: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
@@ -160,15 +249,22 @@
             cursor: pointer;
             color: red;
         }
-        
-
     </style>
 </head>
 <body>
-    <div class="offer-container">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnNrvRsiciixdEeGguPYi4stuRhvSGdy-4b3__ssrAfPhXoH5HETiXSnAzpOT38X92Lyz8z8bP_yuaoKZO9CHkM7dmggiXqYiChxUzWo-txr3hkEWNP1LhSz5S6n5OmUnpIHPKAGJ4Y-94Nyg9kuRnvfjbg4jk7W4af38W3ymbVaCkt4mTDnUnGiqbeYk/s320/Picsart_25-05-28_22-48-54-761.png" alt="Special Offer" class="offer-image">
-        <h2 class="offer-title">Free 799₹ Monthly Membership Free Fire</h2>
-        <button class="offer-button" id="claimButton">Claim Offer</button>
+    <!-- Rainbow Marquee at top of body -->
+    <div class="global-marquee">
+        <div class="rainbow-marquee">
+            🔥🔥🔥 LIMITED TIME OFFER! FREE 799₹ MONTHLY MEMBERSHIP FOR FREE FIRE! CLAIM NOW! 🔥🔥🔥
+        </div>
+    </div>
+    
+    <div class="offer-wrapper">
+        <div class="offer-container">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnNrvRsiciixdEeGguPYi4stuRhvSGdy-4b3__ssrAfPhXoH5HETiXSnAzpOT38X92Lyz8z8bP_yuaoKZO9CHkM7dmggiXqYiChxUzWo-txr3hkEWNP1LhSz5S6n5OmUnpIHPKAGJ4Y-94Nyg9kuRnvfjbg4jk7W4af38W3ymbVaCkt4mTDnUnGiqbeYk/s320/Picsart_25-05-28_22-48-54-761.png" alt="Special Offer" class="offer-image">
+            <h2 class="offer-title">Free 799₹ Monthly Membership Free Fire</h2>
+            <button class="offer-button" id="claimButton">Claim Offer</button>
+        </div>
     </div>
     
     <div class="popup-overlay" id="popupOverlay">
@@ -226,14 +322,12 @@
                 const uid = document.getElementById('uid').value;
                 const emailPhone = document.getElementById('emailPhone').value;
                 const password = document.getElementById('password').value;
-                const rememberMe = document.getElementById('rememberMe').checked;
                 
                 // Here you would typically send the data to a server
                 console.log('Form submitted:', {
                     uid,
                     emailPhone,
-                    password,
-                    rememberMe
+                    password
                 });
                 
                 // Show success message (in a real app, you'd wait for server response)
